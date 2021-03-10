@@ -13,6 +13,7 @@ public class McUser implements Serializable {
     private String mcUserName;
     private String mcUserPassword;
     private Integer mcUserJob;
+    private String  mcUserJobName;
     private Integer mcUserAge;
     private String mcUserEmail;
 

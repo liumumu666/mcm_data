@@ -3,23 +3,27 @@
   <process id="LeaveApplication" name="请假申请" isExecutable="true">
     <documentation>公司内部员工请假申请流程</documentation>
     <startEvent id="sid-645D1A7A-824F-4E1B-8D38-9A40C8635129" name="开始"></startEvent>
-    <userTask id="sid-28F63FB6-021E-4AD0-9CE9-6A31D7AA80A2" name="请假申请">
+    <userTask activiti:assignee="staff" id="sid-28F63FB6-021E-4AD0-9CE9-6A31D7AA80A2" name="请假申请">
       <extensionElements>
         <activiti:taskListener event="create" class="com.liulin.listener.McLeaveListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <userTask activiti:assignee="zhangjingli" id="sid-CF882C2C-D799-472E-8B37-EEB626D77D55" name="部门经理审批">
+    <userTask activiti:assignee="bumenjingli" id="sid-CF882C2C-D799-472E-8B37-EEB626D77D55" name="部门经理审批">
       <extensionElements>
         <activiti:taskListener event="create" class="com.liulin.listener.McLeaveListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <userTask activiti:assignee="liulin" id="sid-FA3D11E1-EB19-4E12-8B88-36FD91799CBE" name="总经理审批">
+    <userTask activiti:assignee="zongjingli" id="sid-FA3D11E1-EB19-4E12-8B88-36FD91799CBE" name="总经理审批">
       <extensionElements>
         <activiti:taskListener event="create" class="com.liulin.listener.McLeaveListener"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <exclusiveGateway id="sid-77083CF0-6D30-402B-8BFB-97BC3EFCBD03"></exclusiveGateway>
-    <endEvent id="sid-CA986031-FE11-4D8A-99E6-C0508D784495" name="结束"></endEvent>
+    <endEvent id="sid-CA986031-FE11-4D8A-99E6-C0508D784495" name="结束">
+      <extensionElements>
+        <activiti:executionListener event="end" class="com.liulin.listener.McLeaveFinishListener"></activiti:executionListener>
+      </extensionElements>
+    </endEvent>
     <sequenceFlow id="sid-EC05820E-CBAA-43A9-853C-1195B2EB6445" sourceRef="sid-645D1A7A-824F-4E1B-8D38-9A40C8635129" targetRef="sid-28F63FB6-021E-4AD0-9CE9-6A31D7AA80A2"></sequenceFlow>
     <sequenceFlow id="sid-7A267F09-366B-4431-A240-6BF7720BFAFE" sourceRef="sid-28F63FB6-021E-4AD0-9CE9-6A31D7AA80A2" targetRef="sid-CF882C2C-D799-472E-8B37-EEB626D77D55"></sequenceFlow>
     <sequenceFlow id="sid-729317C3-A565-426A-BBA4-7E25E7567B9D" sourceRef="sid-CF882C2C-D799-472E-8B37-EEB626D77D55" targetRef="sid-77083CF0-6D30-402B-8BFB-97BC3EFCBD03"></sequenceFlow>

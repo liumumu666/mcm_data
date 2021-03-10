@@ -1,10 +1,7 @@
 package com.liulin.mapper;
 
 import com.liulin.entity.McUser;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -20,7 +17,8 @@ public interface McUserMapper {
     /**
      * 查询所有用户，分类
      */
-    @Select("SELECT mc_user_id,mc_user_niname,mc_user_name,mc_user_sex,mc_user_job,mc_user_age,mc_user_email FROM `mcm`.`mc_user` WHERE mc_user_job = 4 LIMIT #{start} , #{end}")
+    @Select("SELECT mc_user_id,mc_user_niname,mc_user_name,mc_user_sex,mc_user_age,mc_user_email,mc_user_job_name FROM `mcm`.`mc_user` , mc_user_job  " +
+            "WHERE mc_user.mc_user_job = mc_user_job.mc_user_job_id and mc_user_job = 4 LIMIT #{start} , #{end}")
     List<McUser> findAllUsersByJob(@Param("start") Integer start,@Param("end") Integer end);
 
     /**
@@ -38,7 +36,7 @@ public interface McUserMapper {
      * @param mcUserName
      * @return
      */
-    @Select("SELECT * FROM `mcm`.`mc_user` WHERE mc_user_name = #{mcUserName} LIMIT 0,1000")
+    @Select("SELECT * FROM `mcm`.`mc_user` WHERE mc_user_name = #{mcUserName}")
     McUser findByName(@Param("mcUserName") String mcUserName);
 
     /**
@@ -47,8 +45,9 @@ public interface McUserMapper {
      * @return
      */
 
-    @Insert("INSERT INTO `mcm`.`mc_user`(`mc_user_niname`, `mc_user_name`, `mc_user_password`, `mc_user_age`,`mc_user_email`) " +
-            "VALUES (#{mcUser.mcUserNiname}, #{mcUser.mcUserName}, #{mcUser.mcUserPassword}, #{mcUser.mcUserAge}, #{mcUser.mcUserEmail})")
+    @Insert("INSERT INTO `mcm`.`mc_user`(`mc_user_niname`, `mc_user_name`, `mc_user_sex`, `mc_user_password`, `mc_user_age`,`mc_user_email`) " +
+            "VALUES (#{mcUser.mcUserNiname}, #{mcUser.mcUserName},#{mcUser.mcUserSex}, #{mcUser.mcUserPassword}, #{mcUser.mcUserAge}, #{mcUser.mcUserEmail})")
+    @Options(useGeneratedKeys = true, keyProperty = "mcUserId")
     Integer addUser(@Param("mcUser") McUser mcUser);
 
 

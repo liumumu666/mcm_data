@@ -3,10 +3,7 @@ package com.liulin.controller;
 import com.liulin.entity.McUser;
 import com.liulin.service.McUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,18 +26,39 @@ public class McUserController {
      * 查询所有员工
      */
     @GetMapping("/user/findAllUsersByJob")
-    public List<McUser> findAllUsersByJob(Integer start,Integer end){
-        return mcUserService.findAllUsersByJob(start,end);
+    public List<McUser> findAllUsersByJob(Integer start, Integer end) {
+        return mcUserService.findAllUsersByJob(start, end);
+    }
+
+    /**
+     * 通过用户名查询用户
+     */
+
+    @GetMapping("/user/checkUserName")
+    public Boolean checkUserName(String userName) {
+        if (mcUserService.findByName(userName) == null)
+            return true;
+        else
+            return false;
     }
 
     /**
      * 通过id查询用户
+     *
      * @param mcUserId
      * @return
      */
     @GetMapping("/user/findById/{mcUserId}")
-    public McUser findUserById(@PathVariable(name = "mcUserId") Integer mcUserId){
+    public McUser findUserById(@PathVariable(name = "mcUserId") Integer mcUserId) {
         return mcUserService.findUserById(mcUserId);
+    }
+
+    /**
+     * 添加用户
+     */
+    @PostMapping("/user/addUser")
+    public Integer addUser(@RequestBody McUser mcUser) {
+        return mcUserService.addUser(mcUser);
     }
 
 

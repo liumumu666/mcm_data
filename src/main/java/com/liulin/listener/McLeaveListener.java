@@ -7,13 +7,6 @@ public class McLeaveListener implements TaskListener {
     @Override
     public void notify(DelegateTask delegateTask) {
 
-        System.out.println(delegateTask.getAssignee());
-        System.out.println(delegateTask.getCandidates());
-        System.out.println(delegateTask.getName());
-        System.out.println(delegateTask.getId());
-        System.out.println(delegateTask.getCategory());
-        System.out.println(delegateTask.getEventName());
-        System.out.println(delegateTask.getOwner());
-
+        System.out.println("调用了用户事件监听器");
     }
 }

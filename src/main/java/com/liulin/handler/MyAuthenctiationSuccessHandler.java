@@ -21,21 +21,25 @@ import java.io.IOException;
 public class MyAuthenctiationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
 
-  @Autowired
-  private ObjectMapper objectMapper;
-  @Autowired
-  private McUserService mcUserService;
-  @Override
-  public void onAuthenticationSuccess(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      Authentication authentication) throws IOException, ServletException {
-    System.out.println("###########登录成功");
-    String name = SecurityContextHolder.getContext().getAuthentication().getName();
-    log.info("name="+name);
-    McUser mcUser = mcUserService.findByName(name);
-    Result result = new Result(200,"登录成功！！");
-    response.setContentType("application/json;charset=UTF-8");
-    response.getWriter().write(objectMapper.writeValueAsString(mcUser));
-  }
+    @Autowired
+    private ObjectMapper objectMapper;
+    @Autowired
+    private McUserService mcUserService;
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+        System.out.println("###########登录成功");
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info("name=" + name);
+
+
+        McUser mcUser = mcUserService.findByName(name);
+        request.getSession().setAttribute("mcUser",mcUser);
+        Result result = new Result(200, "登录成功！！");
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write(objectMapper.writeValueAsString(mcUser));
+    }
 }
 

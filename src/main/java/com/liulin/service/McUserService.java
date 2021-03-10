@@ -3,6 +3,7 @@ package com.liulin.service;
 import com.liulin.entity.McUser;
 import com.liulin.mapper.McUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +49,7 @@ public class McUserService {
      */
     public McUser findByName(String mcUserName) {
         System.out.println("McUserService.findByName");
+        System.out.println("登录用户的账号是："+mcUserName);
         return mcUserMapper.findByName(mcUserName);
     }
     /**
@@ -58,6 +60,9 @@ public class McUserService {
      */
     public Integer addUser(McUser mcUser) {
         System.out.println("McUserService.addUser");
+        System.out.println(mcUser.getMcUserPassword());
+        mcUser.setMcUserPassword(new BCryptPasswordEncoder().encode(mcUser.getMcUserPassword()));
+        System.out.println(mcUser.getMcUserPassword());
         return mcUserMapper.addUser(mcUser);
 
     }
